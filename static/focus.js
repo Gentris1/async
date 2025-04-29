@@ -22,19 +22,10 @@ async function run() {
 run();
 
 async function sendRequest(url) {
-    return new Promise((resolve) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-        console.log('inside promise');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    resolve(JSON.parse(xhr.response));
-                }
-            }
-        }
-        xhr.send();
-    });
+    const response = await fetch(url);
+    if (response.status === 200) {
+        return await response.json();
+    }
 }
 
 function reqsToMap(requisites) {
